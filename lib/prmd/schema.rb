@@ -91,7 +91,11 @@ module Prmd
     # @param [Hash] value
     def schema_value_example(value)
       if value.key?('example')
-        value['example']
+        if items["example"].is_a?(Array)
+           items["example"]
+        else
+           [items['example']]
+        end
       elsif value.key?('anyOf')
         id_ref = value['anyOf'].find do |ref|
           ref['$ref'] && ref['$ref'].split('/').last == 'id'
